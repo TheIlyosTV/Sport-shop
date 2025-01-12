@@ -1,5 +1,10 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from "../components/Navbar";
+import { Footer } from "../components/Footer";
+import { Toaster } from "react-hot-toast";
+import { AuthProvider } from "./context/AuthContext"; // Import qilindi
+import { CartProvider } from "./context/CartContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,7 +27,18 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <AuthProvider> {/* AuthProvider body tagining ichida */}
+        <CartProvider>
+            <div className="flex flex-col min-h-screen">
+              <Navbar />
+              <main className="flex-grow bg-gradient-to-b from-gray-100 to-gray-200">
+                {children}
+              </main>
+              <Footer />
+            </div>
+            <Toaster />
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );
